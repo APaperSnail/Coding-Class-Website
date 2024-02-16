@@ -37,7 +37,11 @@
             x[i] = xin - cos(angle) * segLength;
             y[i] = yin - sin(angle) * segLength;
             stroke(colors[i % colors.length])
-            strokeWeight(i / 3 + 5)
+            if (i % 2 == 1) {
+                strokeWeight(18)
+            } else {
+                strokeWeight(9)
+            }
             segment(x[i], y[i], angle);
         }
 
