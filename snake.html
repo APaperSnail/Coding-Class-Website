@@ -118,11 +118,23 @@
 
             // it moved, and therefore use the chain behavior
             const angle = atan2(dy, dx);
-            x[i] = xin - cos(angle) * segLength;
-            y[i] = yin - sin(angle) * segLength;
-            stroke(colors[i % colors.length])
-            strokeWeight(i / 3 + 5)
-            segment(x[i], y[i], angle);
+            const targetX = xin - cos(angle) * segLength;
+            const targetY = yin - sin(angle) * segLength;
+            segments[i].x = (segments[i].x * 2 + targetX) / 3;
+            segments[i].y = (segments[i].y * 2 + targetY) / 3;
+            segments[i].angle = angle;
+
+            segments[i].dx = dx * SPEED_FACTOR; // adjust the x speed
+            segments[i].dy = dy * SPEED_FACTOR; // adjust the y speed
+            segments[i].ddx = dx * ACCELLERATION_FACTOR; // adjust the x accelleration
+            segments[i].ddy = dy * ACCELLERATION_FACTOR; // adjust the y accelleration
+        
+
+            const colorIndex = Math.round(frameCount / 2) + (segNum - segments[i].i);
+            segments[i].color = colors[colorIndex % colors.length];
+
+            segment(segments[i]);
+
         }
 
         function segment(s) {
