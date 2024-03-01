@@ -1,19 +1,85 @@
-<!DOCTYPE html>
 <html>
-    <head>
-        <title>The Most Website of All Time</title>
-    </head>
-    <body>
-        <h1>The Most Website of All Time!</h1>
-        <p>Hello, World!</p>
-        <h2>This is a second page</h2>
-        <p>Ain't that wacky? Here's a list:</p>
-        <p>Im just testing the commit system with this line.</p>
-        <ol type="A">
-            <li>Item One</li>
-            <li>Item Two</li>
-        </ol>
-        <p>Now look at this snail:</p>
-        <img src="/Snail.jpg" width = "500">
-    </body>
+
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.9.0/lib/p5.js"></script>
+    <script src="character.js"></script>
+    <script src="wall.js"></script>
+    <script>
+
+        const CANVAS_WIDTH = 900;
+        const CANVAS_HEIGHT = 900;
+        const MAX_ENEMIES = 5;
+        const MAX_WALLS = 5;
+
+        let p1 = null;
+        let walls = [];
+        let enemies = [];
+
+        function isCollide(a, b) {
+        return !(
+            ((a.y + a.height) < (b.y)) ||
+            (a.y > (b.y + b.height)) ||
+            ((a.x + a.width) < b.x) ||
+            (a.x > (b.x + b.width))
+        ); // lovely code from the internet to test if two objects are colliding
+        }
+
+        function setup() {
+            createCanvas(CANVAS_WIDTH, CANVAS_HEIGHT);
+            p1 = new Character(createVector(100, 100), createVector(0, 0), 100, 'warrior', 50);
+
+            // create a bunch of "enemy" characters with random positions, no velocity and put them in an array of size MAX_ENEMIES
+            for (let i = 0; i < MAX_ENEMIES; i++){
+                let x = Math.random() * CANVAS_WIDTH;
+                let y = Math.random() * CANVAS_HEIGHT;
+                enemies.push(new Character(createVector(x,y), createVector(0, 0), 100, 'enemies', 50))
+            }
+            
+            for (let i = 0; i < MAX_WALLS; i++){
+                let x = Math.random() * CANVAS_WIDTH;
+                let y = Math.random() * CANVAS_HEIGHT;
+                walls.push(new Wall(createVector(x,y), 0, createVector(100, 200), "red"))
+            }
+        }
+
+        function draw() {
+            background(0);
+            handlePlayerInput();
+            p1.updateCharacter(walls);
+            p1.draw();
+
+            enemies.forEach(e => e.draw());
+            walls.forEach(e => e.draw());
+        }
+
+        function handlePlayerInput(){
+            if (keyIsDown(87)) { // W key
+                p1.velocityVector.y -= 1;
+            }
+            if (keyIsDown(83)) { // S key
+                p1.velocityVector.y += 1;
+            }
+            if (keyIsDown(65)) { // A key
+                p1.velocityVector.x -= 1;
+            }
+            if (keyIsDown(68)) { // D key
+                p1.velocityVector.x += 1;
+            }
+
+            // enforce a maximum velocity
+            p1.velocityVector.limit(p1.maxSpeed);
+
+            // make the player point toward the mouse (sucker!)
+            let dx = mouseX - p1.positionVector.x;
+            let dy = mouseY - p1.positionVector.y;
+            p1.ordientationAngle = atan2(dy, dx);
+        }
+    </script>
+</head>
+
+<body>
+    <main>
+    </main>
+</body>
+
 </html>
