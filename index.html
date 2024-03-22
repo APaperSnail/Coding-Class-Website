@@ -1,5 +1,10 @@
 <html>
 
+<!-- <canvas id="canvas"></canvas>
+<div style="display:none;">
+  <img id="source" src="Greg.png" width="300" height="227" />
+</div> -->
+
 <head>
     <script src="https://cdn.jsdelivr.net/npm/p5@1.9.0/lib/p5.js"></script>
     <script src="character.js"></script>
@@ -46,9 +51,9 @@
             background(0);
             handlePlayerInput();
 
-            let point1 = createVector(0,0);
+            let point1 = createVector(CANVAS_WIDTH,CANVAS_HEIGHT);
 
-            p1.updateCharacter(walls);
+            p1.updateCharacter(walls, point1, createVector(mouseX, mouseY));
             p1.draw(point1, createVector(mouseX, mouseY));
 
 
