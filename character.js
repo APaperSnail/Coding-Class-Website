@@ -10,13 +10,11 @@ class Character {
         this.ordientationAngle = ordientationAngle;
     }
 
-  draw() {
+  draw(point1, point2) {
       push();
 
-      
       translate(this.positionVector.x, this.positionVector.y);
       rotate(this.ordientationAngle);
-      
       
       if (this.characterClass === 'warrior') {
         fill(255, 0, 0); // red for warrior
@@ -24,6 +22,22 @@ class Character {
         fill(0, 0, 255); // blue for enemies
       } else {
         fill(128);
+      }
+
+      if (point1 || point2) {
+        // find the slope of the line between p1 and p2
+        let dx = point1.x - point2.x;
+        let dy = point1.y - point2.y;
+        let slope = dx / dy;
+
+        // get slope of the point with respect to p1
+        let pointSlope = (point1.x - this.positionVector.x) / (point1.y - this.positionVector.y);
+
+        if (pointSlope > slope){
+            fill(0,255,0);
+        } else {
+            fill(255,0,0);
+        }
       }
       
       ellipse(0, 0, this.sprite, this.sprite);

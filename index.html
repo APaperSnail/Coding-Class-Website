@@ -45,11 +45,24 @@
         function draw() {
             background(0);
             handlePlayerInput();
+
+            let point1 = createVector(0,0);
+
             p1.updateCharacter(walls);
-            p1.draw();
+            p1.draw(point1, createVector(mouseX, mouseY));
+
+
+            
+           
 
             enemies.forEach(e => e.draw());
             walls.forEach(e => e.draw());
+
+            strokeWeight(10)
+            stroke(255,200,200);
+            line(point1.x,point1.y,mouseX, mouseY)
+            stroke(0,0,0);
+            strokeWeight(1)
         }
 
         function handlePlayerInput(){
