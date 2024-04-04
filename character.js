@@ -72,20 +72,20 @@ class Character {
 
   updateCharacter(walls, point1, point2){
     var hit = false;
-    if (walls.length > 0) {
-      for (let i = 0; i < walls.length; i++) {
-        // console.log(i)
-        let movedPositionY = createVector(this.positionVector.x, this.positionVector.y + this.velocityVector.y);
-        if (this.isCollide(movedPositionY, walls[i])) {
-          this.velocityVector = createVector(this.velocityVector.x, 0)
-        }
+    // if (walls.length > 0) {
+    //   for (let i = 0; i < walls.length; i++) {
+    //     // console.log(i)
+    //     let movedPositionY = createVector(this.positionVector.x, this.positionVector.y + this.velocityVector.y);
+    //     if (this.isCollide(movedPositionY, walls[i])) {
+    //       this.velocityVector = createVector(this.velocityVector.x, 0)
+    //     }
 
-        let movedPositionX = createVector(this.positionVector.x + this.velocityVector.x, this.positionVector.y);
-        if (this.isCollide(movedPositionX, walls[i])) {
-          this.velocityVector = createVector(0, this.velocityVector.y)
-        }
-      }
-    }
+    //     let movedPositionX = createVector(this.positionVector.x + this.velocityVector.x, this.positionVector.y);
+    //     if (this.isCollide(movedPositionX, walls[i])) {
+    //       this.velocityVector = createVector(0, this.velocityVector.y)
+    //     }
+    //   }
+    // }
 
     if (point1 || point2) {
       // find the slope of the line between p1 and p2
@@ -97,7 +97,8 @@ class Character {
       let pointSlope = (point1.x - (this.positionVector.x + this.velocityVector.x)) / (point1.y - (this.positionVector.y + this.velocityVector.y));
 
       if (pointSlope > slope){
-          hit = true
+          // hit = true
+          this.velocityVector = createVector(slope, slope)
       // } else {
       //     hit = true
       }
